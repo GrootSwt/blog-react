@@ -1,0 +1,19 @@
+.blog-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+  margin-bottom: 50px;
+}
+.total-box {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #434343;
+  border-radius: 2px;
+  text-align: center;
+}
+.pagination {
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import { getRequest, IResponse } from '../utils/request'
+import { getRequest, IResponse } from './request'
 import IBaseBean from './base'
 import { IBlogTag } from './blogTag'
 
@@ -10,7 +10,7 @@ export interface IPageableSearchBlogRequestParams {
   s_title?: string
   s_description?: string
   s_tag?: string
-  s_content?: string
+  s_param?: string
 }
 
 export interface IBlog extends IBaseBean {

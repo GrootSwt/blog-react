@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import homeReducer from '../feature/homeSlice'
+import dashBoardReducer from '../feature/dashboardSlice'
 const store = configureStore({
   reducer: {
-    home: homeReducer
+    dashboard: dashBoardReducer
   }
 })
 

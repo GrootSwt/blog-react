@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { IPageable } from './base'
 
 const instance = axios.create({
   baseURL: '/api',
@@ -17,15 +18,14 @@ export enum ResponseStatus {
 export interface IResponse {
   status: ResponseStatus
   message: string
-  pageable?: {
-    page: number
-    size: number
-    total: number
-  }
-  [prop: string]: any
+  pageable?: IPageable
+  data?: any
 }
 
-export function getRequest(url: string, data: IRequestParams = {}): Promise<IResponse> {
+export function getRequest(
+  url: string,
+  data: IRequestParams = {}
+): Promise<IResponse> {
   return new Promise((resolve, reject) => {
     instance
       .get(url, {
@@ -41,7 +41,10 @@ export function getRequest(url: string, data: IRequestParams = {}): Promise<IRes
   })
 }
 
-export function postRequest(url: string, data: IRequestParams = {}): Promise<IResponse> {
+export function postRequest(
+  url: string,
+  data: IRequestParams = {}
+): Promise<IResponse> {
   return new Promise((resolve, reject) => {
     instance
       .post(url, data)
@@ -74,7 +77,10 @@ export function deleteRequest(
   })
 }
 
-export function putRequest(url: string, data: IRequestParams = {}): Promise<IResponse> {
+export function putRequest(
+  url: string,
+  data: IRequestParams = {}
+): Promise<IResponse> {
   return new Promise((resolve, reject) => {
     instance
       .put(url, data)

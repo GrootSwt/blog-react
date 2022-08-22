@@ -1,7 +1,13 @@
 interface IBaseBean {
-  id: string;
-  createTime?: number;
-  lastUpdateTime?: number;
+  id: string
+  createTime?: number
+  lastUpdateTime?: number
 }
 
-export default IBaseBean;
+export interface IPageable {
+  page: number
+  size: number
+  total: number
+}
+
+export default IBaseBean

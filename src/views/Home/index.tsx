@@ -4,7 +4,7 @@ import DashBoard from '../Dashboard'
 import Markdown from '../Markdown'
 
 const Home: FC = () => {
-  const showDashboard = useAppSelector((store) => store.home.showDashboard)
+  const showDashboard = useAppSelector((store) => store.dashboard.showDashboard)
   if (showDashboard) {
     return <DashBoard></DashBoard>
   } else {
