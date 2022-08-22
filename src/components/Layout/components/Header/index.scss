@@ -1,0 +1,21 @@
+.avatar {
+  cursor: pointer;
+  margin-right: 30px;
+}
+
+.blog-search {
+  max-width: 300px;
+  border-radius: 40px;
+
+  &:focus,
+  &:hover,
+  &:focus-visible {
+    border-color: rgb(67, 67, 67);
+    box-shadow: none;
+    outline: none;
+  }
+
+  .blog-search-suffix {
+    cursor: pointer;
+  }
+}

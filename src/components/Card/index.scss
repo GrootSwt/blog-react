@@ -1,0 +1,24 @@
+.blog-card {
+  min-width: 200px;
+  max-width: 400px;
+  border-radius: 12px;
+
+  .ant-card-body {
+    padding: 12px;
+  }
+
+  .title-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h3 {
+      max-width: calc(100% - 100px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .blog-tag {
+    border-radius: 12px;
+  }
+}
