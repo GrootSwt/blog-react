@@ -19,3 +19,14 @@
     cursor: pointer;
   }
 }
+
+.create-blog-btn {
+  float: right;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .blog-search {
+    max-width: 250px;
+  }
+}

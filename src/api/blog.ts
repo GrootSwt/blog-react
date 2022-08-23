@@ -23,8 +23,17 @@ export interface IBlog extends IBaseBean {
 export interface IPageableSearchBlogResponseData extends IResponse {
   data?: Array<IBlog>
 }
+
 export function pageableSearchBlog(
   params: IPageableSearchBlogRequestParams
 ): Promise<IPageableSearchBlogResponseData> {
   return getRequest(BASE_URL + '/pageableSearchBlog', params)
+}
+
+export interface IGetBlogByIdResponseData extends IResponse {
+  data?: IBlog
+}
+
+export function getBlogById(id: string): Promise<IGetBlogByIdResponseData> {
+  return getRequest(BASE_URL + `/${id}/getBlogById`)
 }

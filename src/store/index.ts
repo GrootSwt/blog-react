@@ -1,9 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import dashBoardReducer from '../feature/dashboardSlice'
+import { configureStore } from '@reduxjs/toolkit'
+import blogSlice from '../feature/blogSlice'
 const store = configureStore({
   reducer: {
-    dashboard: dashBoardReducer
-  }
+    blog: blogSlice,
+  },
 })
 
 export default store

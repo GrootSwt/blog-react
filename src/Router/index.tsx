@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { useRoutes } from 'react-router-dom'
 import GlobalLayout from '../components/Layout'
-import Home from '../views/Home'
+import Blog from '../views/Blog'
+import DashBoard from '../views/Dashboard'
 
 const Router: FC = () => {
   const router = useRoutes([
@@ -11,8 +12,12 @@ const Router: FC = () => {
       children: [
         {
           index: true,
-          element: <Home></Home>,
+          element: <DashBoard></DashBoard>,
         },
+        {
+          path: 'blog/:id',
+          element: <Blog></Blog>
+        }
       ],
     },
   ])

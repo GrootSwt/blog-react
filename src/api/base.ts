@@ -1,5 +1,5 @@
 interface IBaseBean {
-  id: string
+  id?: string
   createTime?: number
   lastUpdateTime?: number
 }

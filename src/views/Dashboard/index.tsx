@@ -2,13 +2,16 @@ import { Pagination, PaginationProps } from 'antd'
 import { FC, useEffect, useState } from 'react'
 import { IPageableSearchBlogRequestParams } from '../../api/blog'
 import BlogCard from './components/BlogCard'
-import { pageableSearch } from '../../feature/dashboardSlice'
+import { pageableSearch } from '../../feature/blogSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import './index.scss'
+import styles from './styles.module.scss'
+import classNames from 'classnames/bind'
+const cx = classNames.bind(styles)
+
 const DashBoard: FC = () => {
   const dispatch = useAppDispatch()
-  const blogList = useAppSelector((state) => state.dashboard.blogList)
-  const pageable = useAppSelector((state) => state.dashboard.pageable)
+  const blogList = useAppSelector((state) => state.blog.blogList)
+  const pageable = useAppSelector((state) => state.blog.pageable)
   const [params, setParams] = useState<IPageableSearchBlogRequestParams>({
     p_page: 1,
     p_size: 20,
@@ -24,7 +27,7 @@ const DashBoard: FC = () => {
   }, [dispatch, params])
   return (
     <>
-      <div className='blog-list'>
+      <div className={cx('blog-list')}>
         {blogList &&
           blogList.map((blog, index) => <BlogCard key={index} blog={blog} />)}
       </div>
@@ -33,7 +36,7 @@ const DashBoard: FC = () => {
           current={pageable.page}
           onChange={pageOnChange}
           total={pageable.total}
-          className="pagination"
+          className={cx('pagination')}
         />
       )}
     </>

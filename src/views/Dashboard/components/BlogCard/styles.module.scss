@@ -3,9 +3,12 @@
   border-radius: 12px;
   margin-right: 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 
-  .ant-card-body {
-    padding: 12px;
+  :global {
+    .ant-card-body {
+      padding: 12px;
+    }
   }
 
   .title-time {
@@ -22,4 +25,11 @@
   .blog-tag {
     border-radius: 12px;
   }
+}
+
+@media screen and (max-width: 600px) {
+  .blog-card {
+    width: 300px;
+    margin-right: 0;
+  }   
 }

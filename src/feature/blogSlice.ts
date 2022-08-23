@@ -1,21 +1,21 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IPageable } from '../api/base'
 import {
+  getBlogById,
   IBlog,
+  IGetBlogByIdResponseData,
   IPageableSearchBlogRequestParams,
   IPageableSearchBlogResponseData,
   pageableSearchBlog,
 } from '../api/blog'
 
 interface IState {
-  showDashboard: boolean
   blogList?: Array<IBlog>
   pageable?: IPageable
+  blog?: IBlog
 }
 
-const initialState: IState = {
-  showDashboard: true,
-}
+const initialState: IState = {}
 
 export const pageableSearch = createAsyncThunk<
   IPageableSearchBlogResponseData,
@@ -25,21 +25,32 @@ export const pageableSearch = createAsyncThunk<
   return res
 })
 
-export const homeSlice = createSlice({
-  name: 'home',
+export const getBlogDetail = createAsyncThunk<IGetBlogByIdResponseData, string>(
+  'getBlogById',
+  async (id) => {
+    const res = await getBlogById(id)
+    return res
+  }
+)
+
+export const blogSlice = createSlice({
+  name: 'blog',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(pageableSearch.fulfilled, (state, action) => {
       state.blogList = action.payload.data
       state.pageable = action.payload.pageable
-    })
+    }),
+      builder.addCase(getBlogDetail.fulfilled, (state, action) => {
+        state.blog = action.payload.data
+      })
   },
   reducers: {
-    switchshowDashboard: (state, action: PayloadAction<boolean>) => {
-      state.showDashboard = action.payload
+    clearBlog: (state) => {
+      delete state.blog
     },
   },
 })
 
-export const { switchshowDashboard } = homeSlice.actions
-export default homeSlice.reducer
+export default blogSlice.reducer
+export const { clearBlog } = blogSlice.actions

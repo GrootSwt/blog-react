@@ -1,12 +1,16 @@
-import { SearchOutlined } from '@ant-design/icons'
-import { Avatar, Input } from 'antd'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { Avatar, Button, Input } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 import { IPageableSearchBlogRequestParams } from '../../../../api/blog'
 import avatar from '../../../../assets/images/avatar.jpeg'
-import { pageableSearch } from '../../../../feature/dashboardSlice'
+import { pageableSearch } from '../../../../feature/blogSlice'
 import { useAppDispatch } from '../../../../store/hooks'
-import './index.scss'
+import styles from './styles.module.scss'
+import classNames from 'classnames/bind'
+import { useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+const cx = classNames.bind(styles)
 
 const startSuffixList: Array<string> = [
   'tag:',
@@ -16,8 +20,11 @@ const startSuffixList: Array<string> = [
   'description:',
   '描述：',
 ]
+
 const CustomHeader: FC = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [searchParam, setSearchParam] = useState<string>()
 
   const searchOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -47,7 +54,7 @@ const CustomHeader: FC = () => {
                 params.s_description = param
                 break
               case startSuffixList[5]:
-                params.s_description =param
+                params.s_description = param
                 break
               default:
                 break
@@ -71,18 +78,41 @@ const CustomHeader: FC = () => {
     setSearchParam(event.currentTarget.value)
   }
 
+  const toDashboard = () => {
+    navigate('/')
+  }
+
+  const toCreateBlog = () => {
+    navigate('/blog/create')
+  }
+
   return (
     <Header>
-      <Avatar src={avatar} size="large" className="avatar"></Avatar>
+      <Avatar
+        src={avatar}
+        size="large"
+        className={cx('avatar')}
+        onClick={toDashboard}
+      ></Avatar>
       <Input
         placeholder="标题、描述、标签"
         size="large"
-        className="blog-search"
+        className={cx('blog-search')}
         value={searchParam}
         onChange={searchOnChange}
         onKeyDown={searchOnKeyDown}
-        suffix={<SearchOutlined className="blog-search-suffix" />}
+        suffix={<SearchOutlined className={cx('blog-search-suffix')} />}
       ></Input>
+      {location.pathname === '/' && (
+        <Button
+          className={cx('create-blog-btn')}
+          type="dashed"
+          shape="circle"
+          size="middle"
+          onClick={toCreateBlog}
+          icon={<PlusOutlined />}
+        ></Button>
+      )}
     </Header>
   )
 }

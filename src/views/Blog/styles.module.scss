@@ -1,0 +1,78 @@
+.blog-box {
+  width: 100%;
+  height: 100%;
+  padding: 20px 200px;
+
+  $default-color: #8b949e;
+
+  :global {
+    .EasyMDEContainer .CodeMirror {
+      background-color: #000000;
+      color: $default-color;
+    }
+    .CodeMirror-cursor {
+      border-left: 1px solid $default-color;
+    }
+    .editor-toolbar.fullscreen {
+      background-color: #000000;
+    }
+    .editor-toolbar button.active,
+    .editor-toolbar button:hover {
+      background-color: transparent;
+    }
+
+    .CodeMirror
+      .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+      background-color: transparent;
+    }
+
+    .editor-preview {
+      background-color: #000000;
+      color: $default-color;
+      pre {
+        background-color: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+      }
+    }
+
+    .editor-statusbar {
+      color: $default-color;
+    }
+  }
+
+  .blog-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    h3 {
+      width: 60px;
+      margin-bottom: 0;
+    }
+  }
+  .blog-description {
+    display: flex;
+    margin-bottom: 20px;
+    h3 {
+      width: 60px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .blog-box {
+    padding: 20px 100px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .blog-box {
+    padding: 20px 50px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .blog-box {
+    padding: 10px;
+  }
+}

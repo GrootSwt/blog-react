@@ -1,10 +1,18 @@
 .blog-list {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
   align-content: flex-start;
-  margin-bottom: 50px;
+  margin: 50px;
+}
+@media screen and (max-width: 600px) {
+  .blog-list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
 }
 .total-box {
   display: inline-block;
