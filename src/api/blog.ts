@@ -1,4 +1,4 @@
-import { getRequest, IResponse } from './request'
+import { deleteRequest, getRequest, IResponse, postRequest } from './request'
 import IBaseBean from './base'
 import { IBlogTag } from './blogTag'
 
@@ -36,4 +36,12 @@ export interface IGetBlogByIdResponseData extends IResponse {
 
 export function getBlogById(id: string): Promise<IGetBlogByIdResponseData> {
   return getRequest(BASE_URL + `/${id}/getBlogById`)
+}
+
+export function saveBlog(blog: IBlog): Promise<IGetBlogByIdResponseData> {
+  return postRequest(BASE_URL + '/saveBlog', blog)
+}
+
+export function deleteBlogById(id: string): Promise<IPageableSearchBlogResponseData> {
+  return deleteRequest(BASE_URL + `/${id}/deleteBlogById`)
 }

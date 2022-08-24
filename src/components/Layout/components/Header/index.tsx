@@ -1,11 +1,16 @@
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import {
+  EditOutlined,
+  EyeOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from '@ant-design/icons'
 import { Avatar, Button, Input } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 import { IPageableSearchBlogRequestParams } from '../../../../api/blog'
 import avatar from '../../../../assets/images/avatar.jpeg'
-import { pageableSearch } from '../../../../feature/blogSlice'
-import { useAppDispatch } from '../../../../store/hooks'
+import { pageableSearch, switchPreview } from '../../../../feature/blogSlice'
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
 import styles from './styles.module.scss'
 import classNames from 'classnames/bind'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +31,7 @@ const CustomHeader: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParam, setSearchParam] = useState<string>()
-
+  const isPreview = useAppSelector((store) => store.blog.isPreview)
   const searchOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (searchParam) {
@@ -79,10 +84,12 @@ const CustomHeader: FC = () => {
   }
 
   const toDashboard = () => {
+    dispatch(switchPreview(true))
     navigate('/')
   }
 
   const toCreateBlog = () => {
+    dispatch(switchPreview(false))
     navigate('/blog/create')
   }
 
@@ -94,15 +101,17 @@ const CustomHeader: FC = () => {
         className={cx('avatar')}
         onClick={toDashboard}
       ></Avatar>
-      <Input
-        placeholder="标题、描述、标签"
-        size="large"
-        className={cx('blog-search')}
-        value={searchParam}
-        onChange={searchOnChange}
-        onKeyDown={searchOnKeyDown}
-        suffix={<SearchOutlined className={cx('blog-search-suffix')} />}
-      ></Input>
+      {location.pathname === '/' && (
+        <Input
+          placeholder="标题、描述、标签"
+          size="large"
+          className={cx('blog-search')}
+          value={searchParam}
+          onChange={searchOnChange}
+          onKeyDown={searchOnKeyDown}
+          suffix={<SearchOutlined className={cx('blog-search-suffix')} />}
+        ></Input>
+      )}
       {location.pathname === '/' && (
         <Button
           className={cx('create-blog-btn')}
@@ -111,6 +120,18 @@ const CustomHeader: FC = () => {
           size="middle"
           onClick={toCreateBlog}
           icon={<PlusOutlined />}
+        ></Button>
+      )}
+      {location.pathname.startsWith('/blog') && (
+        <Button
+          className={cx('create-blog-btn')}
+          type="text"
+          shape="circle"
+          size="middle"
+          onClick={() => {
+            dispatch(switchPreview(!isPreview))
+          }}
+          icon={isPreview ? <EditOutlined /> : <EyeOutlined />}
         ></Button>
       )}
     </Header>

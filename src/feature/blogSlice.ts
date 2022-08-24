@@ -1,21 +1,34 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPageable } from '../api/base'
 import {
+  deleteBlogById,
   getBlogById,
   IBlog,
   IGetBlogByIdResponseData,
   IPageableSearchBlogRequestParams,
   IPageableSearchBlogResponseData,
   pageableSearchBlog,
+  saveBlog,
 } from '../api/blog'
 
 interface IState {
+  isPreview: boolean
   blogList?: Array<IBlog>
   pageable?: IPageable
-  blog?: IBlog
+  blog: IBlog
 }
 
-const initialState: IState = {}
+const blogInit = {
+  title: '',
+  description: '',
+  content: '',
+  blogTags: [],
+}
+
+const initialState: IState = {
+  isPreview: true,
+  blog: blogInit,
+}
 
 export const pageableSearch = createAsyncThunk<
   IPageableSearchBlogResponseData,
@@ -33,6 +46,22 @@ export const getBlogDetail = createAsyncThunk<IGetBlogByIdResponseData, string>(
   }
 )
 
+export const saveBlogDetail = createAsyncThunk<IGetBlogByIdResponseData, IBlog>(
+  'saveBlog',
+  async (blog: IBlog) => {
+    const res = await saveBlog(blog)
+    return res
+  }
+)
+
+export const deleteBlog = createAsyncThunk<
+  IPageableSearchBlogResponseData,
+  string
+>('deleteBlogById', async (id) => {
+  const res = await deleteBlogById(id)
+  return res
+})
+
 export const blogSlice = createSlice({
   name: 'blog',
   initialState,
@@ -42,15 +71,33 @@ export const blogSlice = createSlice({
       state.pageable = action.payload.pageable
     }),
       builder.addCase(getBlogDetail.fulfilled, (state, action) => {
-        state.blog = action.payload.data
+        if (action.payload.data) {
+          state.blog = action.payload.data
+        } else {
+          state.blog = blogInit
+        }
+      }),
+      builder.addCase(saveBlogDetail.fulfilled, (state, action) => {
+        if (action.payload.data) {
+          state.blog = action.payload.data
+        } else {
+          state.blog = blogInit
+        }
+      }),
+      builder.addCase(deleteBlog.fulfilled, (store, action) => {
+        store.blogList = action.payload.data
+        store.pageable = action.payload.pageable
       })
   },
   reducers: {
     clearBlog: (state) => {
-      delete state.blog
+      state.blog = blogInit
+    },
+    switchPreview: (store, action: PayloadAction<boolean>) => {
+      store.isPreview = action.payload
     },
   },
 })
 
 export default blogSlice.reducer
-export const { clearBlog } = blogSlice.actions
+export const { clearBlog, switchPreview } = blogSlice.actions
